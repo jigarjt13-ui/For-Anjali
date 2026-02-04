@@ -1,0 +1,171 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Anjali ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffe6ea;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #page-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            z-index: 10;
+        }
+
+        h1 { 
+            color: #ff4d6d; 
+            font-size: 2.8rem; 
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+        }
+        
+        .btn-wrapper {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            min-height: 150px;
+        }
+
+        button {
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 15px rgba(255, 77, 109, 0.2);
+        }
+
+        #yesBtn { background-color: #ff4d6d; color: white; position: relative; z-index: 100; }
+        #noBtn { background-color: #adb5bd; color: white; position: relative; }
+
+        .heart-bg {
+            position: fixed;
+            font-size: 1.5rem;
+            color: #ff4d6d;
+            pointer-events: none;
+            z-index: 1;
+            animation: fly 4s linear forwards;
+        }
+
+        @keyframes fly {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<audio id="myMusic" loop>
+    <source src="https://od.lk/s/MTJfMjMyMzA3MTFf/song.MP3" type="audio/mpeg">
+</audio>
+
+<div id="page-content">
+     <h1 id="headline">Anjali, will you be my Valentine? 🌹</h1>
+     <h2 style="color: #ff4d6d; font-size: 1.2rem;">Please touch anywhere on screen.</h2>
+     
+    <div class="btn-wrapper">
+        <button id="yesBtn" onclick="celebrate()">YES!</button>
+        <button id="noBtn" onmouseover="dodge()" onclick="dodge()">No</button>
+    </div>
+</div>
+
+<script>
+    // Unlocks and plays audio on the very first touch/click
+    document.addEventListener('click', function() {
+        const audio = document.getElementById('myMusic');
+        audio.play().catch(e => console.log("Audio waiting for user interaction."));
+    }, { once: true });
+
+    const phrases = [
+        "Wait, are you sure?",
+        "Really?",
+        "Dwarka trip ma madya tyarthi j tame mane pasand cho...",
+        "You sure? 🤔",
+        "Try again !",
+        "Haha nice try",
+        "No escape! 🔒",
+        "You are testing my patience",
+        "Don't do this to me, Anjali!",
+        "Let's make deal",
+        "Give me a chance and I'll give you everything you deserve.",
+        "I'm crazy about you !!!",
+        "I'm never ending this!"
+    ];
+
+    let clickCount = 0;
+    let yesSize = 1;
+
+    function dodge() {
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        
+        if (clickCount < phrases.length) {
+            noBtn.innerHTML = phrases[clickCount];
+        } else {
+            noBtn.innerHTML = "Just click Yes! ❤️";
+        }
+
+        yesSize += 0.1;
+        yesBtn.style.transform = `scale(${yesSize})`;
+
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 30);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 30);
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+
+        clickCount++;
+
+        if (clickCount > 15) {
+            noBtn.innerHTML = "YES! ❤️";
+            noBtn.style.backgroundColor = "#ff4d6d";
+            noBtn.onmouseover = null;
+            noBtn.style.position = 'static';
+            noBtn.onclick = celebrate;
+        }
+    }
+
+    function celebrate() {
+        document.getElementById('page-content').innerHTML = `
+            <div style="text-align:center;">
+                <h1 style="color:#ff4d6d; font-size: 3.5rem;">YAY! ❤️✨</h1>
+                <img src="https://media.tenor.com/X9S6XfO0738AAAAi/milk-and-mocha-bear-couple.gif" style="width:250px; border-radius:15px;">
+                <h2 style="color: #d81b60; font-size: 2rem; margin-top:20px;">I knew you would say yes, Thanks❣</h2>
+                <h3 style="color: #d81b60; font-size: 2rem;">To pachi date par jaiye ?</h3>
+                <p style="font-size: 1.5rem; color: #ff4d6d;">Best Valentine's Day ever! 🥂</p>
+            </div>
+        `;
+        setInterval(createHeart, 100);
+    }
+
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart-bg');
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '100vh';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+    }
+</script>
+</body>
+</html>
